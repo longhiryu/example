@@ -1,0 +1,22 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+//admin-lte
+@import '~admin-lte/dist/css/adminlte.min.css';
+
+.dropdown-menu{
+    min-width: 20rem;
+}
+
+.navbar-badge {
+    right: 1px !important;
+    top: 1px !important;
+}
