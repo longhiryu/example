@@ -16,11 +16,11 @@ class CreateCatesTable extends Migration
         Schema::create('cates', function (Blueprint $table) {
             $table->id();
             $table->char('name',100);
-            $table->bigInteger('table_id');         // tables
-            $table->text('img')->default('no_image.jpg');
+            $table->char('table',100)->default('products');         // tables
+            $table->text('img')->nullable();
             $table->longText('desc')->nullable();
-            $table->tinyInteger('enable',1)->default(1);
-            $table->tinyInteger('feature',1)->default(0);
+            $table->boolean('enable')->default(true);
+            $table->boolean('feature')->default(false);
             $table->char('title',255)->nullable();          // SEO
             $table->char('keyword',255)->nullable();        // SEO
             $table->text('sum')->nullable();                // SEO

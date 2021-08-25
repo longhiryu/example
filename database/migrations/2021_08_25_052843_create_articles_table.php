@@ -17,11 +17,11 @@ class CreateArticlesTable extends Migration
             $table->id();
             $table->char('sku',10)->nullable();
             $table->string('name',100);
-            $table->bigInteger('cate_id')->default(0);
-            $table->text('img')->default('no_image.jpg');
+            $table->bigInteger('cate_id')->default('0');
+            $table->text('img')->nullable();
             $table->longText('desc')->nullable();
-            $table->tinyInteger('enable',1)->default(1);
-            $table->tinyInteger('feature',1)->default(0);
+            $table->boolean('enable')->default(true);
+            $table->boolean('feature')->default(false);
             $table->char('title',255)->nullable();          // SEO
             $table->char('keyword',255)->nullable();        // SEO
             $table->text('sum')->nullable();                // SEO

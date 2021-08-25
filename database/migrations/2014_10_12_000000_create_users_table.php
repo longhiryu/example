@@ -19,16 +19,16 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->tinyInteger('admin',1)->default(0);
-            $table->tinyInteger('role',2)->default('2');
+            $table->boolean('admin')->default(false);
+            $table->tinyInteger('role')->default(0);
             $table->text('avatar')->nullable();
             $table->text('address')->nullable();
             $table->string('phone',20)->nullable();
-            $table->tinyInteger('enable',1)->default(1); //enabled
+            $table->tinyInteger('enable')->default(1); //enabled
             $table->string('marital',20)->default('single');
             $table->date('birth')->nullable();
             $table->string('idNumber',20)->nullable();
-            $table->tinyInteger('gender',1)->default(0); // male
+            $table->tinyInteger('gender')->default('0'); // male
             $table->rememberToken();
             $table->timestamps();
         });
