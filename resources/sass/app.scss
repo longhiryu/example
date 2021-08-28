@@ -1,22 +1,30 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
-// Variables
-@import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// toastr
+@import "~toastr/toastr.scss";
+// Variables
+@import 'variables';
+
+
 
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
 //admin-lte
 @import '~admin-lte/dist/css/adminlte.min.css';
 
-.dropdown-menu{
-    min-width: 20rem;
-}
+//datatables
+@import '~datatables.net-dt/css/jquery.dataTables.min.css';
 
-.navbar-badge {
-    right: 1px !important;
-    top: 1px !important;
-}
+//jquery confirm
+@import '~jquery-confirm/css/jquery-confirm.css';
+
+
+
+//my customs
+@import 'dataTables.scss';
+@import 'adminLte.scss';

@@ -27,8 +27,5 @@
     </body>
     <!-- Scripts -->
     <script src="{{asset('js/app.js')}}"></script>
-    <script>
-        $(document).ready(function () {
-        });
-    </script>
+    @stack('scripts')
 </html>

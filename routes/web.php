@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DataTablesController;
+use App\Http\Controllers\ProductController;
+use App\Models\Product;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +28,12 @@ Route::get('test', function () {
 
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard',[AdminController::class,'dashboard']);
+    Route::resource('products', ProductController::class);
+    Route::prefix('datatables')->group(function(){
+        Route::get('/products',[DataTablesController::class,'getProductList']);
+    });
+    
 });
+
+
+

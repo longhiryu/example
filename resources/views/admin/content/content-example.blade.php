@@ -26,4 +26,13 @@
     
   </div>
   <!-- /.content -->
+  <script>
+    $(document).ready(function () {
+        var table = $('#myTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": "/ajax/datatable" // đường dẫn trỏ tới Controller trả về dữ liệu
+        });
+    });
+  </script>
 @endsection

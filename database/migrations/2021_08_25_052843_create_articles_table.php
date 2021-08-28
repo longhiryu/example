@@ -22,8 +22,8 @@ class CreateArticlesTable extends Migration
             $table->longText('desc')->nullable();
             $table->boolean('enable')->default(true);
             $table->boolean('feature')->default(false);
-            $table->char('title',255)->nullable();          // SEO
-            $table->char('keyword',255)->nullable();        // SEO
+            $table->string('title',100)->nullable();          // SEO
+            $table->string('keyword',100)->nullable();        // SEO
             $table->text('sum')->nullable();                // SEO
             $table->timestamps();
         });

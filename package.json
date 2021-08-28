@@ -19,12 +19,16 @@
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.38.1",
         "sass-loader": "^10.1.1",
+        "toastr": "^2.1.4",
         "vue-template-compiler": "^2.6.14"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.4",
         "@types/jqueryui": "^1.12.16",
         "admin-lte": "^3.1.0",
-        "jquery": "^3.6.0"
+        "datatables.net": "^1.10.25",
+        "datatables.net-dt": "^1.1.0",
+        "jquery": "^3.6.0",
+        "jquery-confirm": "^3.3.4"
     }
 }
