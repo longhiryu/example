@@ -89,6 +89,21 @@ class ProductController extends Controller
 
     public function enableUpdate($id,$enable)
     {   
-        
+        $update = ($enable == 0)? 1 : 0;
+        Product::where('id',$id)->update(['enable' => $update]);
+        return response()->json([
+            'id' => $id,
+            'enable' => $update
+        ],200);
+    }
+
+    public function featureUpdate($id,$feature)
+    {
+        $update = ($feature == 0)? 1 : 0;
+        Product::where('id',$id)->update(['feature' => $update]);
+        return response()->json([
+            'id' => $id,
+            'feature' => $update
+        ],200);
     }
 }

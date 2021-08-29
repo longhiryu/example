@@ -20,6 +20,10 @@ label:not(.form-check-label):not(.custom-file-label) {
 table.dataTable.no-footer{
     border-bottom: 2px solid #17A2B8;
 }
+
+table.dataTable thead th, table.dataTable thead td {
+    border-bottom: 1px solid #CCC !important;
+}
 //end Datatables
 
 // Table
@@ -33,8 +37,7 @@ table.dataTable.no-footer{
 }
 
 .styled-table thead tr {
-    background-color: #17A2B8;
-    color: #ffffff;
+    
     text-align: left;
 }
 
@@ -59,4 +62,17 @@ table.dataTable.no-footer{
     font-weight: bold;
     color: #009879;
 }
+
+thead input {
+    width: 100%;
+    border: thin solid #CCC !important;
+}
+
+tr.filters{
+    background-color: white !important;
+}
+
+.nowrap {
+    white-space: nowrap;
+  }
 // endtable

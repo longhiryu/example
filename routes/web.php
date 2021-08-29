@@ -31,6 +31,8 @@ Route::prefix('admin')->group(function () {
     Route::resource('products', ProductController::class);
     Route::prefix('datatables')->group(function(){
         Route::get('/products',[DataTablesController::class,'getProductList']);
+        Route::get('/products/enable/{id}/{enable}',[ProductController::class,'enableUpdate']);
+        Route::get('/products/feature/{id}/{feature}',[ProductController::class,'featureUpdate']);
     });
     
 });

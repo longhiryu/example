@@ -28,7 +28,7 @@
         <table id="table-list" class="styled-table">
           <thead>
               <tr>
-                  <th>ID</th></th>
+                  <th>ID</th>
                   <th>SKU</th>
                   <th>Name</th>
                   <th>Price</th>
@@ -40,17 +40,7 @@
               </tr>
           </thead>
           <tbody>
-          <tr class="odd">
-               <th>ID</th>
-               <th>SKU</th>
-               <th>Name</th>
-               <th>Price</th>
-               <th>Cate ID</th>
-               <th>Image</th>
-               <th>Enable</th>
-               <th>Feature</th>
-               <th>Action</th>
-          </tr>
+          
           </tbody>
       </table>
       </div>
@@ -68,17 +58,23 @@
       }
       function columns() {
         var columns = [
-            {data: "id"},
-            {data: "sku"},
+            {data: "id", className: "text-center"},
+            {data: "sku",className: "text-center"},
             {data: "name"},
-            {data: "price"},
-            {data: "cate_id"},
+            {data: "price",className: "text-right"},
+            {data: "cate_id",className: "text-center"},
             {data: "img"},
-            {data: "enable"},
-            {data: "feature"},
-            {data: "action"}
+            {data: "enable",className: "text-center"},
+            {data: "feature",className: "text-center"},
+            {data: "action",className: "text-center"}
         ];
         return columns;
+      }
+      function columnDefs() {
+        var result = [
+          {targets:[2,5], class:"nowrap"}
+        ]
+        return result;
       }
     </script>
 @endpush

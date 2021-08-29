@@ -1,7 +1,11 @@
 import $, { data } from 'jquery'; //datatables
 import dt from 'datatables.net'; // datatables
 $(document).ready(function () {
-    $('#table-list').DataTable({
+    // Setup - add a text input to each footer cell
+    $('#table-list thead tr').clone(true).addClass('filters').appendTo( '#table-list thead' );
+    var table = $('#table-list').DataTable({
+        orderCellsTop: true,
+        fixedHeader: true,
         "processing": true,
         "serverSide": true,
         "ajax": {
@@ -9,7 +13,21 @@ $(document).ready(function () {
         },
         language: dataTablesLanguage(),
         columns: columns(),
+        columnDefs:columnDefs(),
         drawCallback: function( settings ) {
+            $('.enable').on('click',function () { 
+                var link = $(this).attr('data-link');
+                var icon = $(this)
+                axios.get(link).then(function (response) {    
+                    toastr.success('You have updated the record!');
+                    var id = response.data.id;
+                    table.ajax.reload(null, false); // reload table at the current page
+                    console.log(response);
+                });
+                
+            });
+
+
             $("button[name=delete]").click(function () {
                 var link = $(this).attr('data-link');
                 var button = $(this);
@@ -35,7 +53,31 @@ $(document).ready(function () {
                     }
                 });
             });
+
+            
         }
+    });
+
+    table.columns().eq(0).each(function(colIdx) {
+        var cell = $('.filters th').eq($(table.column(colIdx).header()).index());
+        console.log(cell);
+        var title = $(cell).text();
+        $(cell).html( '<input type="text" placeholder="Search '+title+'" />' );
+ 
+        $('input', $('.filters th').eq($(table.column(colIdx).header()).index()) ).off('keyup change').on('keyup change', function (e) {
+            e.stopPropagation();
+            $(this).attr('title', $(this).val());
+                var regexr = '({search})'; //$(this).parents('th').find('select').val();
+                table
+                    .column(colIdx)
+                    .search((this.value != "") ? regexr.replace('{search}', '((('+this.value+')))') : "", this.value != "", this.value == "")
+                    .draw();
+             
+        });
+
+        $('select', $('.filters th').eq($(table.column(colIdx).header()).index()) ).off('change').on('change', function () {
+            $(this).parents('th').find('input').trigger('change');
+        });
     });
 
 
