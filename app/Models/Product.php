@@ -47,4 +47,9 @@ class Product extends \Eloquent
 {
     use HasFactory;
     protected $fillable = ['sku','name','price','cate_id','img','desc','enable','feature','title','keyword','sum'];
+
+    public static function getTableName()
+    {
+        return (new self())->getTable();
+    }
 }

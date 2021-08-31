@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cate;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -12,6 +13,11 @@ class DataTablesController extends Controller
     {
         $product = Product::select('*')->get();
         return Datatables::of($product)
+        ->editColumn('cate_id', function ($product) {
+            $cate = Cate::find($product->cate_id);
+            $result = (isset($cate->name))? $cate->name : '';
+            return $result;
+        })
         ->editColumn('price', function ($product) {
             return number_format($product->price,0,',','.');
         })
@@ -34,7 +40,7 @@ class DataTablesController extends Controller
             $deleteButton = '<button name="delete" type="button" class="btn btn-light btn-sm" data-id="'.$product->id.'" data-link="'.route('products.destroy',$product->id).'">Delete</button>';
             return $editButton.' '.$deleteButton;
         })
-        ->rawColumns(['id','action','enable','feature'])
+        ->rawColumns(['id','action','enable','feature','cate_id'])
         ->make(true);
     }
 }
