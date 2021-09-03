@@ -13,7 +13,8 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Starter Page</li>
+                    <li class="breadcrumb-item active"><a href="{{route('products.index')}}">Products</a></li>
+                        <li class="breadcrumb-item active">{{$product->name}}</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -60,7 +61,7 @@
                             <label for="product-price">Product price:</label>
                             <span class="price-format"><?php echo number_format($product->price,0,',','.')?></span>
                             <div class="input-group mb-3">
-                                <input id="product-price" name="price" value="{{$product->price}}" type="text" class="form-control text-right">
+                                <input id="product-price" name="price" value="{{$product->price}}" type="number" class="form-control text-right">
                             </div>
 
                             <label for="cate_id">Category:</label>
@@ -104,19 +105,25 @@
 
                         <div class="col-md-8">
                             <div class="row">
-                                <div class="col-md-4">
-                                    <label for="product-title">Weight (kg):</label>
+                                <div class="col-md-3">
+                                    <label for="product-sku">SKU:</label>
                                     <div class="input-group mb-3">
-                                        <input id="product-weight" name="weight" value="{{$product->weight}}" type="text" class="form-control" placeholder="kg">
+                                        <input id="product-sku" name="sku" value="{{$product->sku}}" type="text" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <label for="product-title">Weight (kg):</label>
+                                    <div class="input-group mb-3">
+                                        <input id="product-weight" name="weight" value="{{$product->weight}}" type="number" class="form-control" placeholder="kg">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <label for="product-title">Dimension:</label>
                                     <div class="input-group mb-3">
                                         <input id="product-dimension" name="dimension" value="{{$product->dimension}}" type="text" class="form-control" placeholder="L x W x H">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label for="product-title">Color:</label>
                                     <div class="input-group mb-3">
                                         <input id="product-color" name="color" value="{{$product->color}}" type="text" class="form-control" placeholder="red,green...">

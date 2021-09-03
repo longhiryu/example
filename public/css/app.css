@@ -16944,6 +16944,11 @@ tr.filters {
   font-size: 0.9rem !important;
 }
 
+.input-group input,
+.custom-select {
+  background-color: #F4F6F9;
+}
+
 .enable {
   cursor: pointer;
 }

@@ -27,7 +27,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $cate = Cate::where('table',Product::getTableName())->get();
+        return view('admin.content.product.create',compact('cate'));
     }
 
     /**
@@ -38,7 +39,16 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->productValidate($request);
+        $product = $request->all();
+        $submit = $product['submit'];
+        unset($product['submit']);
+        unset($product['_method']);
+        unset($product['_token']);
+        $product['price'] = (double)$request->price;
+
+        Product::create($product);
+        return $this->applyBack($submit);
     }
 
     /**

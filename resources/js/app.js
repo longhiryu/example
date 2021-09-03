@@ -39,5 +39,3 @@ import 'jquery-confirm/js/jquery-confirm';
 
 //amdin script
 import './admin';
-import $, { data } from 'jquery'; //datatables
-import dt from 'datatables.net'; // datatables
