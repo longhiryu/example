@@ -26,9 +26,4 @@
     
   </div>
   <!-- /.content -->
-  <script>
-    $(document).ready(function () {
-
-    });
-  </script>
 @endsection

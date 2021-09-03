@@ -1,6 +1,6 @@
 @extends('admin.admin-master')
 
-@section('title', 'Product list')
+@section('title', 'Partner list')
 
 @section('content')
 <!-- Content Header (Page header) -->
@@ -8,12 +8,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Product list</h1>
+                <h1 class="m-0">Partner list</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Product list</li>
+                    <li class="breadcrumb-item active">Partner list</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -30,12 +30,10 @@
                     <tr>
                         <th>ID</th>
                         <th>SKU</th>
-                        <th>Name</th>
-                        <th>Price</th>
+                        <th>Type</th></th>
+                        <th>Company</th>
+                        <th>Tax number</th>
                         <th>Cate ID</th>
-                        <th>Image</th>
-                        <th>Enable</th>
-                        <th>Feature</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -122,7 +120,7 @@
         });
     });
     function dataUrl() {
-        var url = '/admin/datatables/products';
+        var url = '/admin/datatables/partners';
         return url;
     }
     function columns() {
@@ -135,25 +133,18 @@
                 , className: "text-center"
             }
             , {
-                data: "name"
+                data: "type"
+                , className: "text-center"
             }
             , {
-                data: "price"
-                , className: "text-right"
+                data: "companyName"
+            }
+            , {
+                data: "taxCode"
+                , className: "text-center"
             }
             , {
                 data: "cate_id"
-                , className: "text-center"
-            }
-            , {
-                data: "img"
-            }
-            , {
-                data: "enable"
-                , className: "text-center"
-            }
-            , {
-                data: "feature"
                 , className: "text-center"
             }
             , {
@@ -165,7 +156,7 @@
     }
     function columnDefs() {
         var result = [{
-            targets: [2, 5]
+            targets: [3]
             , class: "nowrap"
         }]
         return result;

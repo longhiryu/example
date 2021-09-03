@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cate;
+use App\Models\Partner;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -40,7 +42,40 @@ class DataTablesController extends Controller
             $deleteButton = '<button name="delete" type="button" class="btn btn-light btn-sm" data-id="'.$product->id.'" data-link="'.route('products.destroy',$product->id).'">Delete</button>';
             return $editButton.' '.$deleteButton;
         })
-        ->rawColumns(['id','action','enable','feature','cate_id'])
+        ->rawColumns(['action','enable','feature','cate_id'])
+        ->make(true);
+    }
+
+    public function getUserList()
+    {
+        $user = User::all();
+        return DataTables::of($user)
+        ->editColumn('enable', function ($user) {
+            $enable = '<span class="enable" data-link="/admin/datatables/users/enable/'.$user->id.'/0"><i class="fas fa-ban text-danger fa-lg"></i></span>'; // enable == 0
+            if ($user->enable == 1) {
+                $enable = '<span class="enable" data-link="/admin/datatables/users/enable/'.$user->id.'/1"><i class="fas fa-check-circle text-success fa-lg"></i></span>';
+            }
+            return $enable;
+        })
+        ->addColumn('action', function ($user) {
+            $editButton = '<a class="btn btn-info btn-sm text-white" href="'.route('users.edit',$user->id).'" role="button">Edit</a>';
+            $deleteButton = '<button name="delete" type="button" class="btn btn-light btn-sm" data-id="'.$user->id.'" data-link="'.route('users.destroy',$user->id).'">Delete</button>';
+            return $editButton.' '.$deleteButton;
+        })
+        ->rawColumns(['action','enable'])
+        ->make(true);
+    }
+
+    public function getPartnerList()
+    {
+        $partner = Partner::all();
+        return DataTables::of($partner)
+        ->addColumn('action', function ($partner) {
+            $editButton = '<a class="btn btn-info btn-sm text-white" href="'.route('partners.edit',$partner->id).'" role="button">Edit</a>';
+            $deleteButton = '<button name="delete" type="button" class="btn btn-light btn-sm" data-id="'.$partner->id.'" data-link="'.route('partners.destroy',$partner->id).'">Delete</button>';
+            return $editButton.' '.$deleteButton;
+        })
+        ->rawColumns(['action','enable'])
         ->make(true);
     }
 }

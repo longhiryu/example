@@ -1,25 +1,25 @@
 @extends('admin.admin-master')
 
-@section('title', 'Product list')
+@section('title', 'User admin page')
 
 @section('content')
-<!-- Content Header (Page header) -->
-<div class="content-header">
+ <!-- Content Header (Page header) -->
+ <div class="content-header">
     <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0">Product list</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Product list</li>
-                </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">User list</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">User list</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
     </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
+  </div>
+  <!-- /.content-header -->
 
 <!-- Main content -->
 <div class="content">
@@ -29,13 +29,12 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>SKU</th>
                         <th>Name</th>
-                        <th>Price</th>
-                        <th>Cate ID</th>
-                        <th>Image</th>
+                        <th>Email</th>
+                        <th>Admin</th>
+                        <th>Phone</th>
+                        <th>Address</th>
                         <th>Enable</th>
-                        <th>Feature</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -75,7 +74,10 @@
                     table.ajax.reload(null, false); // reload table at the current page
                     console.log(response);
                 });
+
             });
+
+
             $("button[name=delete]").click(function() {
                 var link = $(this).attr('data-link');
                 var button = $(this);
@@ -101,13 +103,17 @@
                     }
                 });// Jquery confirm
             });
+
+
         }
     });
+
     table.columns().eq(0).each(function(colIdx) {
         var cell = $('.filters th').eq($(table.column(colIdx).header()).index());
         console.log(cell);
         var title = $(cell).text();
         $(cell).html('<input type="text" placeholder="Search ' + title + '" />');
+
         $('input', $('.filters th').eq($(table.column(colIdx).header()).index())).off('keyup change').on('keyup change', function(e) {
             e.stopPropagation();
             $(this).attr('title', $(this).val());
@@ -116,44 +122,44 @@
                 .column(colIdx)
                 .search((this.value != "") ? regexr.replace('{search}', '(((' + this.value + ')))') : "", this.value != "", this.value == "")
                 .draw();
+
         });
+
         $('select', $('.filters th').eq($(table.column(colIdx).header()).index())).off('change').on('change', function() {
             $(this).parents('th').find('input').trigger('change');
         });
     });
+
     function dataUrl() {
-        var url = '/admin/datatables/products';
+        var url = '/admin/datatables/users';
         return url;
     }
+
     function columns() {
         var columns = [{
                 data: "id"
                 , className: "text-center"
             }
             , {
-                data: "sku"
-                , className: "text-center"
-            }
-            , {
                 data: "name"
             }
             , {
-                data: "price"
-                , className: "text-right"
+                data: "email"
+                , className: "nowrap"
             }
             , {
-                data: "cate_id"
+                data: "admin"
                 , className: "text-center"
             }
             , {
-                data: "img"
+                data: "phone"
+            }
+            , {
+                data: "address"
+                , className: "nowrap"
             }
             , {
                 data: "enable"
-                , className: "text-center"
-            }
-            , {
-                data: "feature"
                 , className: "text-center"
             }
             , {
@@ -163,13 +169,15 @@
         ];
         return columns;
     }
+
     function columnDefs() {
         var result = [{
-            targets: [2, 5]
+            targets: [0]
             , class: "nowrap"
         }]
         return result;
     }
+
     function dataTablesLanguage() {
     var lang = {
     processing: "loading...",
@@ -193,7 +201,9 @@
         sortDescending: ": Message khi đang sắp xếp theo column",
     }
     };
+
     return lang;
 }
+
 </script>
 @endpush

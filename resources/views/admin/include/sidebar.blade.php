@@ -42,11 +42,53 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route('products.index')}}" class="nav-link">
-                                <p>Products</p>
+                                <p>Product list</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('products.create')}}" class="nav-link">
+                                <p>Create new</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview menu-open">
+                    <a href="" class="nav-link">
+                        <i class="nav-icon fas fa-user-circle"></i>
+                        <p>
+                            Users
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('users.index')}}" class="nav-link">
+                                <p>User list</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('users.create')}}" class="nav-link">
+                                <p>Create new</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview menu-open">
+                    <a href="" class="nav-link">
+                        <i class="nav-icon fas fa-handshake"></i>
+                        <p>
+                            Partners
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('partners.index')}}" class="nav-link">
+                                <p>Partner list</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('partners.create')}}" class="nav-link">
                                 <p>Create new</p>
                             </a>
                         </li>
