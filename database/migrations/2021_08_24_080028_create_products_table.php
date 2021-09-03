@@ -26,6 +26,9 @@ class CreateProductsTable extends Migration
             $table->string('title',100)->nullable();          // SEO
             $table->string('keyword',100)->nullable();        // SEO
             $table->text('sum')->nullable();                // SEO
+            $table->float('weight')->default(0)->comment('Trọng lượng');
+            $table->string('dimension',100)->default('L x W x H x SH mm')->comment('Kích thước');
+            $table->string('color',20)->nullable()->comment('Màu sắc');
             $table->timestamps();
         });
     }

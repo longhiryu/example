@@ -1,4 +1,8 @@
 //Admin LTE
+.wrapper{
+    background-color: #f4f6f9;
+}
+
 .dropdown-menu{
     min-width: 20rem;
 }
@@ -6,5 +10,9 @@
 .navbar-badge {
     right: 1px !important;
     top: 1px !important;
+}
+
+.form-control, .form-check{
+    font-size: 0.9rem !important;
 }
 //End adminLTE
