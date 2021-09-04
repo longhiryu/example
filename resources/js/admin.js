@@ -23,5 +23,28 @@ $(document).ready(function () {
             }
         });// Jquery confirm
     });
+
+    $('.logout').click(function(){
+        $.confirm({ // Jquery confirm
+            title: 'Logout confirm!'
+            , content: 'Do you want to logout?'
+            , type: 'red'
+            , buttons: {
+                ok: {
+                    text: "Yes, logout!"
+                    , btnClass: 'btn-danger'
+                    , action: function() {
+                        axios.post('/logout').then(function(response) {
+                            console.log(response);
+                            window.location.href = '/login';
+                        });
+                    }
+                }
+                , cancel: function() {
+                    toastr.success('OK! Just relax!');
+                }
+            }
+        });// Jquery confirm
+    });
 });
 

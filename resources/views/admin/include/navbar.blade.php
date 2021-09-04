@@ -155,6 +155,10 @@
             <i class="fas fa-th-large"></i>
           </a>
         </li>
+        <li class="nav-item">
+          <div class="logout"><i class="fas fa-sign-out-alt"></i> Logout</div>
+        </li>
       </ul>
   </nav>
   <!-- /.navbar -->
+  

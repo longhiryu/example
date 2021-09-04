@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -14,7 +15,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.content.user.list');
+        if (Gate::allows('isAdmin')) {
+            return view('admin.content.user.list');
+        }else{
+            abort(403);
+        }
+        
     }
 
     /**
