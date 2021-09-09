@@ -1,5 +1,7 @@
+
 import $, { data } from 'jquery'; //datatables
 import dt from 'datatables.net'; // datatables
+
 
 $(document).ready(function () {
    

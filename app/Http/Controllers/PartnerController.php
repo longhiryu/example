@@ -85,4 +85,10 @@ class PartnerController extends Controller
             'message' => 'deleted'
         ], 200);
     }
+
+    public function searchPartner($text)
+    {
+        $result = Partner::select('companyName','id')->where('companyName', 'LIKE', "%{$text}%")->get(); 
+        return response()->json($result);
+    }
 }

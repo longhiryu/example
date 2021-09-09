@@ -11,6 +11,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{asset('./plugins/fancybox-master/dist/jquery.fancybox.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('./plugins/EasyAutocomplete/easy-autocomplete.min.css')}}" />
     <style>
         body {
             font-family: 'Nunito';
@@ -37,6 +38,7 @@
 </body>
 <!-- Scripts -->
 <script src="{{asset('js/app.js')}}"></script>
+<script src="{{asset('plugins/EasyAutocomplete/jquery.easy-autocomplete.min.js')}}"></script>
 <script src="{{asset('plugins/ckeditor/ckeditor.js')}}"></script>
 <script src="{{asset('plugins/fancybox-master/dist/jquery.fancybox.min.js')}}"></script>
 <script src="{{asset('plugins/ckeditor/custom.js')}}">

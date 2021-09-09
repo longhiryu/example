@@ -1,5 +1,6 @@
 require('./bootstrap');
-
+var $ = require('jquery');
+var jQuery = require('jquery');
 // Toastr
 window.toastr = require('toastr');
 toastr.options = {
@@ -34,8 +35,6 @@ import 'admin-lte/dist/js/adminlte';
 
 //jqeury confirm
 import 'jquery-confirm/js/jquery-confirm';
-
-
 
 //amdin script
 import './admin';

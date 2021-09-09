@@ -31,7 +31,7 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item has-treeview menu-open">
+                <li class="nav-item has-treeview">
                     <a href="" class="nav-link">
                         <i class="nav-icon fab fa-product-hunt"></i>
                         <p>
@@ -52,7 +52,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item has-treeview menu-open">
+                <li class="nav-item has-treeview">
                     <a href="" class="nav-link">
                         <i class="nav-icon fas fa-user-circle"></i>
                         <p>
@@ -73,7 +73,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item has-treeview menu-open">
+                <li class="nav-item has-treeview">
                     <a href="" class="nav-link">
                         <i class="nav-icon fas fa-handshake"></i>
                         <p>

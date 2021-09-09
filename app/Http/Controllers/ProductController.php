@@ -160,4 +160,10 @@ class ProductController extends Controller
 
         return $validateData;
     }
+
+    public function searchProduct($text)
+    {
+        $result = Product::select('id','name')->where('name', 'LIKE', "%{$text}%")->get(); 
+        return response()->json($result);
+    }
 }

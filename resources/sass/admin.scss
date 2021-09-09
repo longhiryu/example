@@ -1,5 +1,9 @@
 .input-group input, .custom-select{
-    background-color: #F4F6F9;
+    background-color: #F4F6F9 !important;
+}
+
+input.list-ajax{
+    background-color: #EBF5FB !important;
 }
 
 
@@ -13,4 +17,12 @@
 .logout:hover{
     color: black;
     text-decoration: underline;
+}
+
+.easy-autocomplete{
+    width: 100%;
+}
+
+.form-control, .form-check, .input-group-text{
+    font-size: 0.9rem !important;
 }

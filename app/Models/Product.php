@@ -42,6 +42,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property float|null $weight Trọng lượng
+ * @property string|null $dimension Kích thước
+ * @property string|null $color Màu sắc
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereColor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereDimension($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereWeight($value)
  */
 class Product extends \Eloquent
 {
