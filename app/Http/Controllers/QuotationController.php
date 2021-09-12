@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\Partner;
 use App\Models\Product;
 use App\Models\Quotation;
 use App\Models\QuotationDetail;
@@ -70,6 +71,8 @@ class QuotationController extends Controller
         
         // Clear session
         $this->clearList(); 
+
+        return $this->applyBack(null);
     }
 
     /**
@@ -91,7 +94,13 @@ class QuotationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Quotation::find($id);
+        $detail = QuotationDetail::select('*')->where('quotation_id',$id)->get()->toArray(); 
+        Session::put($this->list,$detail);
+        Session::put($this->taxCode,$data->tax);
+        $contact = Contact::find($data->contact_id);
+        $partner = Partner::find($data->partner_id);
+        return view('admin.content.quotation.edit',compact('data','detail','contact','partner'));
     }
 
     /**
@@ -103,7 +112,39 @@ class QuotationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $quotation = $request->all();
+        
+        unset($quotation['submit']);
+        unset($quotation['_method']);
+        unset($quotation['_token']);
+
+        //get data from session
+        $details = Session::get($this->list);
+        $taxCode = Session::get($this->taxCode);
+
+        // Quotation create
+        $quotation['subTotal'] = 0;
+        foreach ($details as $value) {
+            $quotation['subTotal'] += $value['lineTotal']; 
+        }
+        $quotation['total'] = $quotation['subTotal'] * $taxCode / 100 + $quotation['subTotal'];
+        
+        Quotation::where('id',$id)->update($quotation);
+        $id = Quotation::all()->last()->id; // to update in quoatation detail 
+
+        // Delete những line cũ thuộc Quotation 
+        QuotationDetail::whereIn('quotation_id',[$id])->delete();
+
+        // Add dữ liệu mới vào Database
+        foreach ($details as &$value) {
+            $value['quotation_id'] = (int)$id;  // id của Quotation
+            QuotationDetail::create($value);
+        }
+        
+        // Clear session
+        $this->clearList(); 
+
+        return $this->applyBack($id);
     }
 
     /**
@@ -209,6 +250,16 @@ class QuotationController extends Controller
         $result = Session::get($this->list);
         $view = view('admin.content.quotation.detail',compact('result','taxCode'));
         return $view;
+    }
+
+    public function applyBack($id = null)
+    {
+        if ($id != null) {
+            return redirect()->back();
+        }else{
+            $id = Product::all()->last()->id;
+            return redirect()->route('products.edit', ['product' => $id]);
+        }
     }
 
 }

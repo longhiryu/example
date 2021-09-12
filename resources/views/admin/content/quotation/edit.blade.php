@@ -14,7 +14,7 @@
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item active">Quotation</li>
-                    <li class="breadcrumb-item active">Create new</li>
+                    <li class="breadcrumb-item active">Edit</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -24,11 +24,12 @@
 
 <!-- Main content -->
 <div class="content">
-    <form method="POST" action="{{route('quotations.store')}}">
+    <form method="POST" action="{{route('quotations.update',$data->id)}}">
+        @method('PUT')
         @csrf
         <div class="card card-outline card-info mx-3">
             <div class="card-header">
-                <h3 class="card-title">New quoattion</h3>
+                <h3 class="card-title">{{$data->name}}</h3>
                 <div class="card-tools">
                     <!-- Buttons, labels, and many other things can be placed here! -->
                     <!-- Here is a label for example -->
@@ -54,53 +55,59 @@
                         <div class="col-md-4">
                             <label for="quoation-name">Quotation name (*):</label>
                             <div class="input-group mb-3">
-                                <input id="quoation-name" name="name" value="{{old('name')}}" type="text" class="form-control">
+                                <input id="quoation-name" name="name" value="{{$data->name}}" type="text" class="form-control">
                             </div>
                         </div> <!-- col-md-4-->
 
                         <div class="col-md-4">
                             <label for="contact">Contact (*):</label>
                             <div class="input-group mb-3">
-                                <input id="contact" value="" type="text" class="form-control">
-                                <input id="contact_id" name="contact_id" value="" type="hidden" class="form-control">
+                                <input id="contact" value="{{$contact->fullname}}" type="text" class="form-control">
+                                <input id="contact_id" name="contact_id" value="{{$contact->id}}" type="hidden" class="form-control">
                             </div>
                         </div><!-- col-md-4-->
 
                         <div class="col-md-4">
                             <label for="contact">Partner (*):</label>
                             <div class="input-group mb-3">
-                                <input id="partner" value="" type="text" class="form-control">
-                                <input id="partner_id" name="partner_id" value="" type="hidden" class="form-control">
+                                <input id="partner" value="{{$partner->companyName}}" type="text" class="form-control">
+                                <input id="partner_id" name="partner_id" value="{{$partner->id}}" type="hidden" class="form-control">
                             </div>
                         </div><!-- col-md-4-->
 
                         <div class="col-md-4">
                             <label for="contact">SKU (*):</label>
                             <div class="input-group mb-3">
-                                <input id="sku" name="sku" value="{{old('sku')}}" type="text" class="form-control text-right">
+                                <input id="sku" name="sku" value="{{$data->sku}}" type="text" class="form-control text-right">
                             </div>
                         </div><!-- col-md-4-->
 
                         <div class="col-md-4">
                             <label for="contact">Version (*):</label>
                             <div class="input-group mb-3">
-                                <input id="version" name="version" value="{{old('version')}}" type="text" class="form-control text-right">
+                                <input id="version" name="version" value="{{$data->version}}" type="text" class="form-control text-right">
                             </div>
                         </div><!-- col-md-4-->
 
                         <div class="col-md-4">
                             <label for="contact">Tax (default 10%):</label>
                             <div class="input-group mb-3">
+                                <?php 
+                                    $tax = [10,3,0];   
+                                ?>
                                 <select class="custom-select" id="tax" name="tax">
-                                    <option value="10" selected>Default</option>
-                                    <option value="10">10%</option>
-                                    <option value="3">03%</option>
-                                    <option value="0">0%</option>
+                                    <option value="10">Default</option>
+                                    @foreach($tax as $value)
+                                        <?php 
+                                            $select = ($value == $data->tax)? 'selected' : null;
+                                        ?>
+                                        <option {{$select}} value="{{$value}}">{{$value}}%</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div><!-- col-md-4-->
 
-                        <div class="col-md-12 py-2 mb-3 rounded-lg">
+                        <div class="col-md-12 border py-2 mb-3 rounded-lg">
                             <label for="contact">Add product (*):</label>
                             <div class="row">
                                 <div class="input-group mb-3 col-md-8">
@@ -123,7 +130,7 @@
                                 Note (*):
                             </label>
                             <textarea name='note' id='desc'>
-                            
+                                {{$data->note}}
                             </textarea>
                         </div><!-- col-md-12-->
                     </div> <!-- row-->
@@ -140,6 +147,19 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
+
+        var link = '/admin/quotation/update-list/';
+        axios.get(link).then(function(response) {
+            $('.details').html(response.data);
+            if (response.data != '') {
+                toastr.success('List is updated!'); 
+            }else{
+                toastr.warning('There is nothing in list!'); 
+            }
+            
+            console.log(response);
+        });
+
 
         $('#tax').on('change',function(){
             var tax = this.value;

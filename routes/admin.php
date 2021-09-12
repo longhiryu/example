@@ -57,3 +57,8 @@ Route::get('quotation/update-tax/{tax}',[QuotationController::class, 'updateTax'
 Route::get('quotation/delete-item/{id}',[QuotationController::class, 'deleteItem']);
 Route::get('quotation/update-list',[QuotationController::class, 'updateList']);
 Route::get('quotation/clear-list',[QuotationController::class, 'clearList']);
+
+// Export PDF
+Route::get('export-pdf', function () {
+    return view('admin.content.quotation.export-pdf');
+});
