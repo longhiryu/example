@@ -258,7 +258,7 @@ class QuotationController extends Controller
             return redirect()->back();
         }else{
             $id = Product::all()->last()->id;
-            return redirect()->route('products.edit', ['product' => $id]);
+            return redirect()->route('quotations.edit', $id);
         }
     }
 

@@ -34,6 +34,7 @@
                     <!-- Buttons, labels, and many other things can be placed here! -->
                     <!-- Here is a label for example -->
                     <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check-square"></i> Apply / Save</button>
+                    <a class="btn btn-info btn-sm" href="/admin/quotation-pdf/{{$data->id}}" role="button">Export PDF</a> | 
                     <button type="button" class="btn btn-light btn-sm exit" data-url="{{route('products.index')}}"><i class="fas fa-sign-out-alt"></i> Exit</button>
                 </div>
                 <!-- /.card-tools -->

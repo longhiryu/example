@@ -8,6 +8,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PDFController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +61,4 @@ Route::get('quotation/update-list',[QuotationController::class, 'updateList']);
 Route::get('quotation/clear-list',[QuotationController::class, 'clearList']);
 
 // Export PDF
-Route::get('export-pdf', function () {
-    return view('admin.content.quotation.export-pdf');
-});
+Route::get('quotation-pdf/{id}', [PDFController::class, 'quotationPDF']);
