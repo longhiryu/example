@@ -21,36 +21,33 @@
         h3{font-weight: 400; font-size: 1.5rem}
         .partner{font-size: 0.7rem; width: 70%; float: left;}
         .version{font-size: 0.7rem; width: 30%; float: right; text-align: right}
-        .styled-table {
+        table {
             border-collapse: collapse;
+            border-spacing: 0;
             font-size: 0.7em;
             font-family: DejaVu Sans;
             width: 100%;
         }
-        .styled-table thead tr {
+        table thead tr th{
             background-color: #f7941d;
             color: #ffffff;
             text-align: center;
-        }
-        .styled-table th,
-        .styled-table td {
-            padding: 5px 5px;
-        }
-        .styled-table tbody tr {
-            border-bottom: 1px solid #dddddd;
+            padding: 8px 8px;
         }
 
-        .styled-table tbody tr:nth-of-type(even) {
+        table tbody tr:nth-of-type(even) {
             background-color: #f3f3f3;
         }
 
-        .styled-table tbody tr:last-of-type {
-            border-bottom: 2px solid #f7941d;
+        table tbody tr td,
+        table tbody tr th{
+            padding: 5px 5px;
         }
-        .styled-table tbody tr.active-row {
-            font-weight: bold;
-            color: #f7941d;
+
+        table, th, td {
+            border: 1px solid black;
         }
+        
         .note{
             width: 60%;
             float: left;
@@ -67,9 +64,8 @@
         .bold{
             font-weight: 700;
         }
-        hr {
-            border: 1px solid #f7941d;
-        }
+
+
     </style>
 </head>
 <body>
@@ -94,6 +90,7 @@
 
         <div class="fullwidth text-center title">
             <h2>BẢNG BÁO GIÁ</h2>
+            {{$quotation->name}}
         </div>
 
         <div class="clearfix"></div>
@@ -115,12 +112,11 @@
 
         <div class="clearfix"></div>
 
-        <table class="styled-table">
+        <table class="styled-table" border="1">
             <thead>
                 <tr>
                     <th>STT</th>
                     <th>Hình ảnh</th>
-                    <th>Mã SP</th>
                     <th>Mô tả sản phẩm</th>
                     <th>ĐVT</th>
                     <th>SL</th>
@@ -135,12 +131,13 @@
                 @foreach($detail as $value)
                 <tr>
                     <td class="text-center">{{$n}}</td>
-                    <td class="text-center"><img src="{{$value->img}}" width="75" height="75" /></td>
-                    <td>{{$value->sku}}</td>
-                    <td style="width: 30%">
-                        {{$value->name}}
+                    <td class="text-center"><img src="{{asset($value->img)}}" width="100" /></td>
+                    <td style="width: 40%">
+                        {{$value->name}} - {{$value->sku}}
                         <div class="clearfix"></div>
-                        {{$value->dimension}}
+                        Kích thước: {{$value->dimension}}
+                        <div class="clearfix"></div>
+                        {!! $value->desc !!} 
                     </td>
                     <td class="text-center">{{$value->unit}}</td>
                     <td class="text-center">{{$value->quantity}}</td>
@@ -152,17 +149,17 @@
                 @endphp
                 @endforeach
                 <tr>
-                    <td colspan="7" class="text-right bold">Thành tiền:</td>
+                    <td colspan="6" class="text-right bold">Thành tiền:</td>
                     <td class="text-right">{{number_format($quotation->subTotal,0,',','.')}}</td>
                 </tr>
                 <tr>
-                    <td colspan="7" class="text-right bold">Thuế:</td>
+                    <td colspan="6" class="text-right bold">Thuế:</td>
                     <td class="text-right">
                         <?php echo number_format($quotation->subTotal * 10 / 100,0,',','.');?>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="7" class="text-right bold">Tổng cộng:</td>
+                    <td colspan="6" class="text-right bold">Tổng cộng:</td>
                     <td class="text-right">{{number_format($quotation->total,0,',','.')}}</td>
                 </tr>
                 <!-- and so on... -->

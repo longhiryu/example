@@ -124,9 +124,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="product-title">Color:</label>
+                                    <label for="product-unit">Unit:</label>
                                     <div class="input-group mb-3">
-                                        <input id="product-color" name="color" value="{{$product->color}}" type="text" class="form-control" placeholder="red,green...">
+                                        <input id="product-unit" name="unit" value="{{$product->unit}}" type="text" class="form-control">
                                     </div>
                                 </div>
                             </div>

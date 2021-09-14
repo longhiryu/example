@@ -52,7 +52,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends \Eloquent
 {
     use HasFactory;
-    protected $fillable = ['sku','name','price','cate_id','img','desc','enable','feature','title','keyword','sum'];
+    protected $fillable = ['sku','name','price','cate_id','img','desc','enable','feature','title','keyword','sum','unit','weight','dimension'];
 
     public static function getTableName()
     {

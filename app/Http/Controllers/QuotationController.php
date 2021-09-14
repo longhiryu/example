@@ -175,11 +175,10 @@ class QuotationController extends Controller
         }
 
         if ($flag === true) {   // Nếu id chưa tồn tại thì lấy dữ liệu và thêm vào mảng
-            $product = Product::select('id','name','price','img','desc','dimension')->where('id',$id)->get()->toArray();
+            $product = Product::select('*')->where('id',$id)->get()->toArray();
             $product[0]['product_id']= $product[0]['id']; unset($product[0]['id']);
             $product[0]['quantity']= 1;
             $product[0]['lineTotal']= $product[0]['quantity'] * $product[0]['price'];
-            $product[0]['unit']= '';
             array_push($data,$product[0]);
         }
 

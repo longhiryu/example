@@ -30,7 +30,7 @@ class PDFController extends Controller
         // add to array
         $data = ['quotation' => $quotation,'detail' => $detail, 'contact' => $contact, 'partner' => $partner];
         
-        $pdf = PDF::loadView('admin.content.quotation.export-pdf', $data)->setPaper('a4', 'portrait');
+        $pdf = PDF::loadView('admin.content.quotation.export-pdf', $data)->setPaper('letter', 'portrait');
     
         return $pdf->download('itsolutionstuff.pdf');
     }

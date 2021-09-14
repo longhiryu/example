@@ -45,7 +45,7 @@
             <input data-id="{{$item['product_id']}}" type="text" class="unit form-control text-center list-ajax" value="{{$item['unit']}}">
         </div>
         <div class="col-md-1 px-1 justify-content-center align-self-center">
-            <input data-id="{{$item['product_id']}}" type="number" class="quantity form-control text-right list-ajax" value="{{$item['quantity']}}">
+            <input data-id="{{$item['product_id']}}" type="text" class="quantity form-control text-right list-ajax" value="{{$item['quantity']}}">
         </div>
         <div class="col-md-2 px-1 justify-content-center align-self-center">
             <input data-id="{{$item['product_id']}}" type="text" class="price form-control text-right list-ajax" value="<?php echo number_format($item['price'],0,',','.')?>">
