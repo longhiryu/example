@@ -3,6 +3,10 @@
 @section('title', 'content')
 
 @section('content')
+<?php 
+    $approved = ($data->approved == 0)? '<i class="fas fa-clipboard text-danger"></i>':'<i class="fas fa-clipboard-check text-success"></i>';
+    $locked = ($data->locked == 0)? '<i class="fas fa-unlock-alt text-success"></i>':'<i class="fas fa-lock text-danger"></i>';
+?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
@@ -29,13 +33,18 @@
         @csrf
         <div class="card card-outline card-info mx-3">
             <div class="card-header">
-                <h3 class="card-title">{{$data->name}}</h3>
+                <h3 class="card-title">{{$data->name}} {!!$approved!!} {!!$locked!!}</h3>
                 <div class="card-tools">
                     <!-- Buttons, labels, and many other things can be placed here! -->
                     <!-- Here is a label for example -->
-                    <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check-square"></i> Apply / Save</button>
-                    <a class="btn btn-info btn-sm" href="/admin/quotation-pdf/{{$data->id}}" role="button">Export PDF</a> | 
-                    <button type="button" class="btn btn-light btn-sm exit" data-url="{{route('products.index')}}"><i class="fas fa-sign-out-alt"></i> Exit</button>
+                    @if ($data->locked == 0)
+                    <button type="submit" class="btn btn-success btn-sm">Apply / Save</button>
+                    @endif
+                    <!-- PDF-->
+                    @if ($data->approved != 0)
+                    <a class="btn btn-info btn-sm" href="/admin/quotation-pdf/{{$data->id}}" role="button">Export PDF</a>
+                    @endif
+                     | <button type="button" class="btn btn-light btn-sm exit" data-url="{{route('quotations.index')}}"><i class="fas fa-sign-out-alt"></i> Exit</button>
                 </div>
                 <!-- /.card-tools -->
             </div>
@@ -148,6 +157,67 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
+
+        $('.approve').click(function(){
+            var link = $(this).attr('data-url');
+            $.confirm({ // Jquery confirm
+                title: 'Approved confirm!'
+                , content: 'Do you want to approve this Quotation? You can not edit this Quotation after aprroved!'
+                , type: 'red'
+                , buttons: {
+                    ok: {
+                        text: "Yes, approve!"
+                        , btnClass: 'btn-danger'
+                        , action: function() {
+                            axios.get(link).then(function(response) {
+                                toastr.success('The Quotation is approved!'); 
+                                console.log(response);
+                                location.reload();
+                            });
+                        }
+                    }
+                    , cancel: function() {
+                        toastr.success('OK! Just relax!');
+                    }
+                }
+            });// Jquery confirm
+            
+        });
+
+        $('.unlock').click(function(){
+            var link = $(this).attr('data-url');
+            $.confirm({ // Jquery confirm
+                title: 'Unlock confirm!'
+                , content: 'Do you want to unlock this Quotation? The author can be edit content after unlocked!'
+                , type: 'red'
+                , buttons: {
+                    ok: {
+                        text: "Yes, unlock!"
+                        , btnClass: 'btn-danger'
+                        , action: function() {
+                            axios.get(link).then(function(response) {
+                                toastr.success('The Quotation is unlocked!'); 
+                                console.log(response);
+                                location.reload();
+                            });
+                        }
+                    }
+                    , cancel: function() {
+                        toastr.success('OK! Just relax!');
+                    }
+                }
+            });// Jquery confirm
+            
+        });
+
+        $('.remove-approved').click(function(){
+            var link = $(this).attr('data-url');
+            axios.get(link).then(function(response) {
+                toastr.warning('The Quotation is unapproved!'); 
+                console.log(response);
+                location.reload();
+            });
+        });
 
         var link = '/admin/quotation/update-list/';
         axios.get(link).then(function(response) {

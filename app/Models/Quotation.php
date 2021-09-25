@@ -40,7 +40,8 @@ use Illuminate\Database\Eloquent\Model;
 class Quotation extends \Eloquent
 {
     use HasFactory;
-    protected $fillable = ['name','contact_id','partner_id','sku','version','note','subTotal','tax','total','sum'];
+    protected $fillable = ['name','author','contact_id','partner_id','sku','version','note','subTotal','tax','total','sum','approved','locked'];
+    public $allias = 'Quotation';
 
     public static function getTableName()
     {

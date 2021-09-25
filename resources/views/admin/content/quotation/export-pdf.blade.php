@@ -50,16 +50,16 @@
         
         .note{
             width: 60%;
-            float: left;
+            float: right;
             font-size: 0.7em;
             font-family: DejaVu Sans;
         }
         .sale{
             width: 40%;
-            float: right;
+            float: left;
             font-size: 0.7em;
             font-family: DejaVu Sans;
-            text-align: right;
+            text-align: left;
         }
         .bold{
             font-weight: 700;
@@ -104,6 +104,7 @@
         </div>
 
         <div class="version">
+            <br />
             SKU: <strong>{{$quotation->sku}}</strong><br />
             Version: <strong>{{$quotation->version}}</strong><br />
             Ngày tạo: {{date("d/m/Y",strtotime($quotation->created_at))}}<br />
@@ -167,10 +168,6 @@
             
         </table>
 
-        <div class="note">
-               {!! $quotation->note !!} 
-        </div>
-
         <div class="sale">
             <p>
                 Người báo giá: <strong>{{ Auth::user()->name }}</strong><br />
@@ -179,6 +176,12 @@
             </p>
             
         </div>
+
+        <div class="note">
+               {!! $quotation->note !!} 
+        </div>
+
+        
     </div>
 </body>
 

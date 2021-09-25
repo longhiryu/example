@@ -14,7 +14,7 @@
                 <img src="{{asset(Auth::user()->avatar)}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="#" class="d-block">{{ Auth::user()->name }} - Role : {{ Auth::user()->role_id }}</a>
             </div>
         </div>
 
@@ -31,6 +31,7 @@
                         </p>
                     </a>
                 </li>
+                <!-- Product -->
                 <li class="nav-item has-treeview">
                     <a href="" class="nav-link">
                         <i class="nav-icon fab fa-product-hunt"></i>
@@ -52,6 +53,53 @@
                         </li>
                     </ul>
                 </li>
+
+                <!-- Account-->
+                <li class="nav-item has-treeview">
+                    <a href="" class="nav-link">
+                        <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                        <p>
+                            Account
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('accounts.index')}}" class="nav-link">
+                                <p>Account list</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('accounts.create')}}" class="nav-link">
+                                <p>Create new</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <!-- Quotation-->
+                <li class="nav-item has-treeview">
+                    <a href="" class="nav-link">
+                        <i class="nav-icon fas fa-clipboard-list"></i>
+                        <p>
+                            Quotation <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('quotations.index')}}" class="nav-link">
+                                <p>Quotations list</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('quotations.create')}}" class="nav-link">
+                                <p>Create new</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="nav-item has-treeview">
                     <a href="" class="nav-link">
                         <i class="nav-icon fas fa-user-circle"></i>

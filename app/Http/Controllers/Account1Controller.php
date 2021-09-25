@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Account;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
-class UserController extends Controller
+class Account1Controller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Gate::allows('isAdmin')) {
-            return view('admin.content.user.list');
-        }else{
-            abort(403);
-        }
-        
+        //
     }
 
     /**
@@ -30,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        //
     }
 
     /**
@@ -41,17 +35,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = $request->all();
-        User::create($user);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Account $account)
     {
         //
     }
@@ -59,10 +52,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Account $account)
     {
         //
     }
@@ -71,10 +64,10 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Account $account)
     {
         //
     }
@@ -82,24 +75,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Account $account)
     {
-        User::destroy($id);
-        return response()->json([
-            'message' => 'deleted'
-        ], 200);
-    }
-
-    public function enableUpdate($id, $enable)
-    {
-        $update = ($enable == 0) ? 1 : 0;
-        User::where('id', $id)->update(['enable' => $update]);
-        return response()->json([
-            'id' => $id,
-            'enable' => $update
-        ], 200);
+        //
     }
 }

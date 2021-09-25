@@ -7,6 +7,7 @@ use App\Models\Partner;
 use App\Models\Product;
 use App\Models\Quotation;
 use App\Models\QuotationDetail;
+use App\Models\User;
 use Config;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -22,7 +23,7 @@ class QuotationController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.content.quotation.list');
     }
 
     /**
@@ -31,7 +32,10 @@ class QuotationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   
+        // Kiểm tra phân quyền
+        $this->authorize('create',Quotation::class);    
+
         return view('admin.content.quotation.create');
     }
 
@@ -42,8 +46,12 @@ class QuotationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $quotation = $request->all();
+    {   
+        // Kiểm tra phân quyền
+        $this->authorize('create',Quotation::class);    
+
+        // Get data
+        $quotation = $request->all();   
         
         unset($quotation['submit']);
         unset($quotation['_method']);
@@ -53,13 +61,16 @@ class QuotationController extends Controller
         $details = Session::get($this->list);
         $taxCode = Session::get($this->taxCode);
 
-        // Quotation create
+        // Tính toán Subtotal
         $quotation['subTotal'] = 0;
         foreach ($details as $value) {
             $quotation['subTotal'] += $value['lineTotal']; 
         }
+
+        //Tính toán Total
         $quotation['total'] = $quotation['subTotal'] * $taxCode / 100 + $quotation['subTotal'];
         
+        // Tạo mới 
         Quotation::create($quotation);
         $id = Quotation::all()->last()->id; // to update in quoatation detail 
 
@@ -83,7 +94,22 @@ class QuotationController extends Controller
      */
     public function show($id)
     {
-        //
+        // Kiểm tra phân quyền
+        $quotation = Quotation::find($id);
+        $this->authorize('view',$quotation);
+
+        // get quotation data from DB
+        $quotation = Quotation::find($id);
+        //get detail of quotation
+        $detail = QuotationDetail::select('*')->where('quotation_id',$id)->get();
+        //get contact of quotation
+        $contact = Contact::find($quotation->contact_id);
+        //get partner of quotation
+        $partner = Partner::find($quotation->partner_id);
+        //get author
+        $author = User::find($quotation->author);
+
+        return view('admin.content.quotation.show',compact('quotation','detail','contact','partner','author'));
     }
 
     /**
@@ -94,6 +120,9 @@ class QuotationController extends Controller
      */
     public function edit($id)
     {
+        $quotation = Quotation::find($id);
+        $this->authorize('update',$quotation);
+
         $data = Quotation::find($id);
         $detail = QuotationDetail::select('*')->where('quotation_id',$id)->get()->toArray(); 
         Session::put($this->list,$detail);
@@ -112,37 +141,49 @@ class QuotationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $quotation = Quotation::find($id);
+        $this->authorize('update',$quotation);
+
         $quotation = $request->all();
         
         unset($quotation['submit']);
         unset($quotation['_method']);
         unset($quotation['_token']);
+        unset($quotation['author']);    // Chặn update author
 
         //get data from session
         $details = Session::get($this->list);
         $taxCode = Session::get($this->taxCode);
 
-        // Quotation create
-        $quotation['subTotal'] = 0;
-        foreach ($details as $value) {
-            $quotation['subTotal'] += $value['lineTotal']; 
-        }
-        $quotation['total'] = $quotation['subTotal'] * $taxCode / 100 + $quotation['subTotal'];
-        
-        Quotation::where('id',$id)->update($quotation);
-        $id = Quotation::all()->last()->id; // to update in quoatation detail 
+        // Chặn update 
+        $check = Quotation::find($id);
+            // Kiểm tra locked
+            if($check->locked == 0):
+                // Tính toán  subTotal và Total
+                $quotation['subTotal'] = 0;
+                foreach ($details as $value) {
+                    $quotation['subTotal'] += $value['lineTotal']; 
+                }
+                $quotation['total'] = $quotation['subTotal'] * $taxCode / 100 + $quotation['subTotal'];
 
-        // Delete những line cũ thuộc Quotation 
-        QuotationDetail::whereIn('quotation_id',[$id])->delete();
+                // Lock Quotation lại 
+                $quotation['locked'] = 1;
 
-        // Add dữ liệu mới vào Database
-        foreach ($details as &$value) {
-            $value['quotation_id'] = (int)$id;  // id của Quotation
-            QuotationDetail::create($value);
-        }
-        
-        // Clear session
-        $this->clearList(); 
+                // Update
+                Quotation::where('id',$id)->update($quotation);
+
+                // Delete những line cũ thuộc Quotation 
+                QuotationDetail::whereIn('quotation_id',[$id])->delete();
+
+                // Add dữ liệu mới vào Quotation detail
+                foreach ($details as &$value) {
+                    $value['quotation_id'] = (int)$id;  // id của Quotation
+                    QuotationDetail::create($value);
+                }
+                
+                // Clear session
+                $this->clearList(); 
+            endif;
 
         return $this->applyBack($id);
     }
@@ -153,9 +194,28 @@ class QuotationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,Quotation $quotation)
     {
-        //
+        $this->authorize('delete',$quotation);
+        //Quotation::destroy($id);
+    }
+
+    public function quotationApprove($id,$user_id)
+    {
+        Quotation::where('id',$id)->update(['approved' => $user_id]);
+        return true;
+    }
+
+    public function removeApprove($id)
+    {
+        Quotation::where('id',$id)->update(['approved' => 0]);
+        return true;
+    }
+
+    public function unlockQuotation($id)
+    {
+        Quotation::where('id',$id)->update(['locked' => 0]);
+        return true;
     }
 
     public function addItem($id)
@@ -167,14 +227,16 @@ class QuotationController extends Controller
             $data = Session::get($this->list);
         }
 
-        $flag = true;   // kiểm tra id đã tồn tại trong mảng hay chưa
+        // kiểm tra đối tượng đã tồn tại trong mảng hay chưa
+        $flag = true;   
         foreach ($data as $item) {
             if ($item['product_id'] == $id) {
                 $flag = false;
             }
         }
-
-        if ($flag === true) {   // Nếu id chưa tồn tại thì lấy dữ liệu và thêm vào mảng
+        
+        // Nếu id chưa tồn tại thì lấy dữ liệu và thêm vào mảng
+        if ($flag === true) {   
             $product = Product::select('*')->where('id',$id)->get()->toArray();
             $product[0]['product_id']= $product[0]['id']; unset($product[0]['id']);
             $product[0]['quantity']= 1;
@@ -187,7 +249,6 @@ class QuotationController extends Controller
         Session::put($this->taxCode,10);
 
         return $this-> returnList();
-
     }
 
     public function updateItem($id,$name,$value)
@@ -256,7 +317,7 @@ class QuotationController extends Controller
         if ($id != null) {
             return redirect()->back();
         }else{
-            $id = Product::all()->last()->id;
+            $id = Quotation::all()->last()->id;
             return redirect()->route('quotations.edit', $id);
         }
     }

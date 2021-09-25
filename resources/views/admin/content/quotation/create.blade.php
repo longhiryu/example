@@ -28,7 +28,7 @@
         @csrf
         <div class="card card-outline card-info mx-3">
             <div class="card-header">
-                <h3 class="card-title">New quoattion</h3>
+                <h3 class="card-title">New quotation</h3>
                 <div class="card-tools">
                     <!-- Buttons, labels, and many other things can be placed here! -->
                     <!-- Here is a label for example -->
@@ -55,6 +55,7 @@
                             <label for="quoation-name">Quotation name (*):</label>
                             <div class="input-group mb-3">
                                 <input id="quoation-name" name="name" value="{{old('name')}}" type="text" class="form-control">
+                                <input id="author" name="author" value="{{Auth::user()->id}}" type="hidden">
                             </div>
                         </div> <!-- col-md-4-->
 
