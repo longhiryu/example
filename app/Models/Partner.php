@@ -45,7 +45,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Partner whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Partner extends Model
+class Partner extends \Eloquent
 {
     use HasFactory;
     protected $fillable = ['cate_id','sku','type','companyName','shortName','representativeName','taxCode','address','phone','email','accountNumber','bankName','note'];

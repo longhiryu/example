@@ -36,6 +36,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Quotation whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Quotation whereVersion($value)
  * @mixin \Eloquent
+ * @property int $author User id
+ * @property int $locked 1 is locked
+ * @property int $approved
+ * @method static \Illuminate\Database\Eloquent\Builder|Quotation whereApproved($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Quotation whereAuthor($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Quotation whereLocked($value)
  */
 class Quotation extends \Eloquent
 {

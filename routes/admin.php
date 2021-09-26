@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ use App\Http\Controllers\PermissionController;
 Route::middleware(['auth'])->group(function () {
     Route::resource('accounts', AccountController::class);
 
-    Route::resource('accounts1', Account1Controller::class);
+    Route::resource('projects', ProjectController::class);
 
     Route::get('/dashboard', [AdminController::class, 'dashboard']);
     // Product
@@ -73,6 +74,9 @@ Route::get('/search/contact/{text}', [ContactController::class, 'searchContact']
 
 // Partner
 Route::get('/search/partner/{text}', [PartnerController::class, 'searchPartner']);
+
+// Quotation
+Route::get('/search/quotation/{text}', [QuotationController::class, 'searchQuotation']);
 
 // AddItem
 Route::get('quotation/add-item/{id}',[QuotationController::class, 'addItem']);

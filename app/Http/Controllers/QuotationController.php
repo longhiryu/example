@@ -322,4 +322,11 @@ class QuotationController extends Controller
         }
     }
 
+
+    public function searchQuotation($text)
+    {
+        $result = Quotation::select('name','id')->where('name', 'LIKE', "%{$text}%")->get(); 
+        return response()->json($result);
+    }
+
 }

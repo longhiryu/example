@@ -54,6 +54,30 @@
                     </ul>
                 </li>
 
+
+                <!-- Project -->
+                <li class="nav-item has-treeview">
+                    <a href="" class="nav-link">
+                        <i class="nav-icon fab fa-ubuntu"></i>
+                        <p>
+                            Project
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('projects.index')}}" class="nav-link">
+                                <p>Project list</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('projects.create')}}" class="nav-link">
+                                <p>Create new</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <!-- Account-->
                 <li class="nav-item has-treeview">
                     <a href="" class="nav-link">

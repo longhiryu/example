@@ -48,6 +48,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereColor($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereDimension($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereWeight($value)
+ * @property string|null $unit Màu sắc
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereUnit($value)
  */
 class Product extends \Eloquent
 {

@@ -33,7 +33,7 @@
                     <!-- Buttons, labels, and many other things can be placed here! -->
                     <!-- Here is a label for example -->
                     <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check-square"></i> Apply / Save</button>
-                    <button type="button" class="btn btn-light btn-sm exit" data-url="{{route('products.index')}}"><i class="fas fa-sign-out-alt"></i> Exit</button>
+                    <button type="button" class="btn btn-light btn-sm exit" data-url="{{route('quotations.index')}}"><i class="fas fa-sign-out-alt"></i> Exit</button>
                 </div>
                 <!-- /.card-tools -->
             </div>
