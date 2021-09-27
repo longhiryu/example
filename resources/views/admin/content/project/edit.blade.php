@@ -13,7 +13,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item ">Project</li>
+                    <li class="breadcrumb-item "><a href="{{route('projects.index')}}">Project</a></li>
                     <li class="breadcrumb-item active">{{$project->name}}</li>
                 </ol>
             </div><!-- /.col -->
