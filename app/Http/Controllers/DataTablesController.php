@@ -9,8 +9,6 @@ use App\Models\Partner;
 use App\Models\Product;
 use App\Models\Quotation;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Yajra\DataTables\Contracts\DataTable;
 use Yajra\DataTables\Facades\DataTables;
 
 class DataTablesController extends Controller
@@ -83,19 +81,6 @@ class DataTablesController extends Controller
         ->addColumn('action', function ($user) {
             $editButton = '<a class="btn btn-info btn-sm text-white" href="'.route('users.edit',$user->id).'" role="button">Edit</a>';
             $deleteButton = '<button name="delete" type="button" class="btn btn-light btn-sm" data-id="'.$user->id.'" data-link="'.route('users.destroy',$user->id).'">Delete</button>';
-            return $editButton.' '.$deleteButton;
-        })
-        ->rawColumns(['action','enable'])
-        ->make(true);
-    }
-
-    public function getPartnerList()
-    {
-        $partner = Partner::all();
-        return DataTables::of($partner)
-        ->addColumn('action', function ($partner) {
-            $editButton = '<a class="btn btn-info btn-sm text-white" href="'.route('partners.edit',$partner->id).'" role="button">Edit</a>';
-            $deleteButton = '<button name="delete" type="button" class="btn btn-light btn-sm" data-id="'.$partner->id.'" data-link="'.route('partners.destroy',$partner->id).'">Delete</button>';
             return $editButton.' '.$deleteButton;
         })
         ->rawColumns(['action','enable'])

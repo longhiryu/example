@@ -33,7 +33,7 @@
                         <th>Type</th></th>
                         <th>Company</th>
                         <th>Tax number</th>
-                        <th>Cate ID</th>
+                        <th>Value</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -120,7 +120,7 @@
         });
     });
     function dataUrl() {
-        var url = '/admin/datatables/partners';
+        var url = '/admin/list/partners';
         return url;
     }
     function columns() {
@@ -144,8 +144,8 @@
                 , className: "text-center"
             }
             , {
-                data: "cate_id"
-                , className: "text-center"
+                data: "value"
+                , className: "text-center text-success font-weight-bold"
             }
             , {
                 data: "action"

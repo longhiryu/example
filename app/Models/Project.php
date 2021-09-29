@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -44,5 +44,33 @@ class Project extends \Eloquent
     public static function getTableName()
     {
         return (new self())->getTable();
+    }
+
+    public function getProjectList(){
+        $project = Project::all();
+        return DataTables::of($project)
+        ->editColumn('contact_id', function ($project) {
+            $contact = Contact::find($project->contact_id);
+            return $contact->fullname;
+        })
+        ->editColumn('partner_id', function ($project) {
+            $partner = Partner::find($project->partner_id);
+            return $partner->companyName;
+        })
+        ->editColumn('subTotal', function ($project) {
+            return number_format($project->subTotal,0,',','.');
+        })
+        ->editColumn('tax', function ($project) {
+            return number_format($project->tax,0,',','.');
+        })
+        ->editColumn('total', function ($project) {
+            return number_format($project->total,0,',','.');
+        })
+        ->addColumn('action', function ($project) {
+            $editButton = '<a class="btn btn-info btn-sm text-white" href="'.route('projects.edit',$project->id).'" role="button">Edit</a>';
+            return $editButton;
+        })
+        ->rawColumns(['action','contact_id','partner_id','subTotal','tax','total'])
+        ->make(true);
     }
 }

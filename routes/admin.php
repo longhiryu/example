@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProjectController;
+use App\Models\Partner;
+use App\Models\Project;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +30,10 @@ use App\Http\Controllers\ProjectController;
 Route::middleware(['auth'])->group(function () {
     Route::resource('accounts', AccountController::class);
 
+    //Project
+    Route::get('list/projects',[Project::class,'getProjectList']);
     Route::resource('projects', ProjectController::class);
+    
 
     Route::get('/dashboard', [AdminController::class, 'dashboard']);
     // Product
@@ -36,7 +41,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/search/product/{text}', [ProductController::class, 'searchProduct']);
 
     Route::resource('users', UserController::class);
+
+    // Partner
     Route::resource('partners', PartnerController::class);
+    Route::get('list/partners', [Partner::class, 'getPartnerList']);
 
     // Permission
     Route::resource('permissions', PermissionController::class);
@@ -61,7 +69,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/users', [DataTablesController::class, 'getUserList']);
         Route::get('/users/enable/{id}/{enable}', [UserController::class, 'enableUpdate']);
 
-        Route::get('/partners', [DataTablesController::class, 'getPartnerList']);
+        
     });
 });
 

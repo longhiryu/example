@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Yajra\DataTables\Facades\DataTables;
 /**
  * App\Models\Partner
  *
@@ -48,10 +48,31 @@ use Illuminate\Database\Eloquent\Model;
 class Partner extends \Eloquent
 {
     use HasFactory;
-    protected $fillable = ['cate_id','sku','type','companyName','shortName','representativeName','taxCode','address','phone','email','accountNumber','bankName','note'];
+    protected $fillable = ['sku','type','companyName','shortName','representativeName','taxCode','address','phone','email','note'];
 
     public static function getTableName()
     {
         return (new self())->getTable();
+    }
+
+    public function getPartnerList()
+    {
+        $partner = Partner::all();
+        return DataTables::of($partner)
+        ->addColumn('action', function ($partner) {
+            $editButton = '<a class="btn btn-info btn-sm text-white" href="'.route('partners.edit',$partner->id).'" role="button">Edit</a>';
+            $deleteButton = '<button name="delete" type="button" class="btn btn-light btn-sm" data-id="'.$partner->id.'" data-link="'.route('partners.destroy',$partner->id).'">Delete</button>';
+            return $editButton.' '.$deleteButton;
+        })->addColumn('value', function ($partner) {
+            $project = Project::where('partner_id',$partner->id)->select('total')->get();
+            $totalValue = 0;
+            foreach ($project as $value) {
+                $totalValue += $value->total;
+            }
+
+            return number_format($totalValue,0,',','.');
+        })
+        ->rawColumns(['action','value'])
+        ->make(true);
     }
 }

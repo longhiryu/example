@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Models\Quotation;
 use App\Models\QuotationDetail;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProjectController extends Controller
 {
@@ -88,6 +89,14 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         $data = $request->except('_token','_method');
+
+        // Add value to data array
+        $quotation = Quotation::find($data['quotation_id']);
+        $data['subTotal'] = $quotation->subTotal;
+        $data['total'] = $quotation->subTotal * 1.1;
+        $data['tax'] = $quotation->total - $quotation->subTotal;
+
+        //Update project
         Project::where('id',$project->id)->update($data);
 
         return redirect()->route('projects.edit',$project->id);
