@@ -75,8 +75,8 @@ class ProjectController extends Controller
     {
         $contact = Contact::find($project->contact_id);
         $partner = Partner::find($project->partner_id);
-        $quotation = Quotation::find($project->quotation_id);
-        return view('admin.content.project.edit',compact('project','contact','partner','quotation'));
+        $quotations = Quotation::where('project_id',$project->id)->get();
+        return view('admin.content.project.edit',compact('project','contact','partner','quotations'));
     }
 
     /**
@@ -111,5 +111,11 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+
+    public function searchProject($text)
+    {
+        $result = Project::select('id','name')->where('name', 'LIKE', "%{$text}%")->get(); 
+        return response()->json($result);
     }
 }

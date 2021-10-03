@@ -29,7 +29,7 @@
         @csrf
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-4">
                     <div class="card card-outline card-info">
                         <div class="card-header">
                             <h3 class="card-title">{{$project->name}}</h3>
@@ -53,81 +53,94 @@
                             </div>
                             @endif
 
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="quoation-name">Project name (*):</label>
-                                        <div class="input-group mb-3">
-                                            <input id="quoation-name" name="name" value="{{$project->name}}" type="text" class="form-control">
-                                        </div>
-                                    </div> <!-- col-md-4-->
+                            <label for="quoation-name">Project name (*):</label>
+                            <div class="input-group mb-3">
+                                <input id="quoation-name" name="name" value="{{$project->name}}" type="text" class="form-control">
+                            </div>
 
-                                    <div class="col-md-4">
-                                        <label for="contact">Contact (*):</label>
-                                        <div class="input-group mb-3">
-                                            <input id="contact" value="{{$contact->fullname}}" type="text" class="form-control">
-                                            <input id="contact_id" name="contact_id" value="{{$contact->id}}" type="hidden" class="form-control">
-                                        </div>
-                                    </div><!-- col-md-4-->
+                            <label for="contact">Contact (*):</label>
+                            <div class="input-group mb-3">
+                                <input id="contact" value="{{$contact->fullname}}" type="text" class="form-control">
+                                <input id="contact_id" name="contact_id" value="{{$contact->id}}" type="hidden" class="form-control">
+                            </div>
 
-                                    <div class="col-md-4">
-                                        <label for="contact">Partner (*):</label>
-                                        <div class="input-group mb-3">
-                                            <input id="partner" value="{{$partner->companyName}}" type="text" class="form-control">
-                                            <input id="partner_id" name="partner_id" value="{{$partner->id}}" type="hidden" class="form-control">
-                                        </div>
-                                    </div><!-- col-md-4-->
+                            <label for="contact">Partner (*):</label>
+                            <div class="input-group mb-3">
+                                <input id="partner" value="{{$partner->companyName}}" type="text" class="form-control">
+                                <input id="partner_id" name="partner_id" value="{{$partner->id}}" type="hidden" class="form-control">
+                            </div>
 
-                                    <div class="col-md-6">
-                                        <label for="contact">
-                                            Quotation (*): 
-                                            <button data-link="{{route('quotations.show',$quotation->id)}}" type="button" class="btn btn-primary btn-sm quickview py-0" data-toggle="modal" data-target="#quickview">View</button>
-                                        </label>
-                                        <div class="input-group mb-3">
-                                            <input id="quotation" value="{{$quotation->name}}" type="text" class="form-control">
-                                            <input id="quotation_id" name="quotation_id" value="{{$quotation->id}}" type="hidden">
-                                        </div>
-                                    </div><!-- col-md-6-->
-
-                                    <div class="col-md-6">
-                                        <label for="contact">Location (*):</label>
-                                        <div class="input-group mb-3">
-                                            <input id="location" name="location" value="{{$project->location}}" type="text" class="form-control">
-                                        </div>
-                                    </div><!-- col-md-6-->
-
-                                    <div class="col-md-12">
-                                        <label class="form-check-label mb-3" for="desc">
-                                            Note (*):
-                                        </label>
-                                        <textarea name='note' id='desc'>{{$project->note}}</textarea>
-                                    </div><!-- col-md-12-->
-                                </div> <!-- row-->
-                            </div><!-- container-fluid-->
-
+                            <label for="contact">Location (*):</label>
+                            <div class="input-group mb-3">
+                                <input id="location" name="location" value="{{$project->location}}" type="text" class="form-control">
+                            </div>
 
                         </div>
                     </div>
-                </div> <!-- col-md-8-->
+                </div> <!-- col-md-4-->
 
-                <div class="col-md-4">
+                <div class="col-md-8">
                     <div class="card card-outline card-info">
                         <div class="card-header">Giá trị</div>
                         <div class="card-body">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-md-6 text-right">Giá trị:</div>
-                                    <div class="col-md-6 font-weight-bold">{{number_format($project->subTotal,0,',','.')}}</div>
-                                    <div class="col-md-6 text-right">Thuế:</div>
-                                    <div class="col-md-6 font-weight-bold">{{number_format($project->tax,0,',','.')}}</div>
-                                    <div class="col-md-6 text-right">Tổng giá trị:</div>
-                                    <div class="col-md-6 font-weight-bold">{{number_format($project->total,0,',','.')}}</div>
-                                </div>
-                            </div>
+                            <table class="table table-striped" style="font-size: 0.9rem;">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center p-1">ID</th>
+                                        <th class="text-center p-1">Quotation name</th>
+                                        <th class="text-center p-1">Type</th>
+                                        <th class="text-center p-1">Date</th>
+                                        <th class="text-center p-1">Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $value_in = $value_out = 0;?>
+                                    @foreach($quotations as $quotation)
+                                    <?php 
+                                        if ($quotation->type == 'in') {
+                                            $value_in += $quotation->total; 
+                                        }else{
+                                            $value_out += $quotation->total; 
+                                        }
+                                    ?>
+                                    <tr>
+                                        <td class="p-1 text-center">{{$quotation->id}}</td>
+                                        <td class="p-1">{{$quotation->name}}</td>
+                                        <td class="p-1 {{($quotation->type == 'in')? 'text-warning':'text-info'}}">
+                                            <?php 
+                                                $type = ($quotation->type == 'in')? 'Đầu vào (NCC)':'Đầu ra (KH)';
+                                                echo $type;    
+                                            ?>
+                                        </td>
+                                        <td class="p-1 text-center">{{date("d/m/Y",strtotime($quotation->created_at))}}</td>
+                                        <td class="p-1 text-center {{($quotation->type == 'in')? 'text-warning':'text-info'}}">
+                                            {{number_format($quotation->total,0,',','.')}}
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                            <span class="text-info">{{number_format($value_out,0,',','.')}}</span> <br />
+                            <span class="text-warning">{{number_format($value_in,0,',','.')}}</span> <br />
+                            <?php $profit = $value_out - $value_in;?>
+                            <span class="font-weight-bold {{($profit > 0)? 'text-success':'text-danger'}}">
+                                {{number_format($profit,0,',','.')}}
+                            </span>
+                        </div>
+                    </div><!-- card-->
+                </div>
+                <!-- col-md-8-->
+
+                <div class="col-md-12">
+                    <div class="card card-outline card-info">
+                        <div class="card-header">Note</div>
+                        <div class="card-body">
+                            <textarea name='note' id='desc'>{{$project->note}}</textarea>
                         </div>
                     </div>
                 </div>
-                <!-- col-md-4-->
+                <!-- col-md-12-->
 
             </div> <!-- row -->
         </div><!-- container -->

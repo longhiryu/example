@@ -85,4 +85,10 @@ class PartnerController extends Controller
     {
         //
     }
+
+    public function searchPartner($text)
+    {
+        $result = Partner::select('id','companyName')->where('companyName', 'LIKE', "%{$text}%")->get(); 
+        return response()->json($result);
+    }
 }

@@ -85,23 +85,29 @@
                             </div>
                         </div><!-- col-md-4-->
 
-                        <div class="col-md-4">
-                            <label for="contact">SKU (*):</label>
+                        <div class="col-md-2">
                             <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">SKU (*)</span>
+                                </div>
                                 <input id="sku" name="sku" value="{{$data->sku}}" type="text" class="form-control text-right">
                             </div>
-                        </div><!-- col-md-4-->
+                        </div><!-- col-md-2-->
 
-                        <div class="col-md-4">
-                            <label for="contact">Version (*):</label>
+                        <div class="col-md-2">
                             <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Version (*)</span>
+                                </div>
                                 <input id="version" name="version" value="{{$data->version}}" type="text" class="form-control text-right">
                             </div>
-                        </div><!-- col-md-4-->
+                        </div><!-- col-md-2-->
 
                         <div class="col-md-4">
-                            <label for="contact">Tax (default 10%):</label>
                             <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Tax (default 10%)</span>
+                                </div>
                                 <?php 
                                     $tax = [10,3,0];   
                                 ?>
@@ -116,6 +122,26 @@
                                 </select>
                             </div>
                         </div><!-- col-md-4-->
+
+                        <div class="col-md-4">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Type (*)</span>
+                                </div>
+                                <select class="custom-select" id="type" name="type">
+                                    <option value="in" {{($data->type == 'in')? 'selected':null}}>Đầu vào (NCC)</option>
+                                    <option value="out" {{($data->type == 'out')? 'selected':null}}>Đầu ra (KH)</option>
+                                </select>
+                            </div>
+                        </div><!-- col-md-4-->
+
+                        <div class="col-md-6">
+                            <label for="project">Project (*):</label>
+                            <div class="input-group mb-3">
+                                <input id="project" value="{{$project->name}}" type="text" class="form-control">
+                                <input id="project_id" name="project_id" value="{{$project->id}}" type="hidden" class="form-control">
+                            </div>
+                        </div><!-- col-md-6-->
 
                         <div class="col-md-12 border py-2 mb-3 rounded-lg">
                             <label for="contact">Add product (*):</label>
@@ -458,6 +484,32 @@
         };
 
         $("#addProduct").easyAutocomplete(product);
+
+        var project = {
+            url: function(phrase) {
+                return "/admin/search/project/" + phrase;
+            }
+            , getValue: "name"
+            , list: {
+                match: {
+                    enabled: true
+                }
+            }
+            , theme: "square"
+            , requestDelay: 500
+            , minCharNumber: 3
+            , adjustWidth: false
+            , list: {
+
+                onSelectItemEvent: function() {
+                    var value = $("#project").getSelectedItemData().id;
+
+                    $("#project_id").val(value).trigger("change");
+                }
+            }
+        };
+
+        $("#project").easyAutocomplete(project);
     });
 
     function costQuotation() {

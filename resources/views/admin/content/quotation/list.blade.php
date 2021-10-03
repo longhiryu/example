@@ -31,10 +31,9 @@
                         <th>Date</th>
                         <th>SKU</th>
                         <th>Name</th>
-                        <th>Contact</th>
+                        <th>Project</th>
                         <th>Partner</th>
-                        <th>Sub total</th>
-                        <th>Tax</th>
+                        <th>Type</th>
                         <th>Total</th>
                         <th>Action</th>
                     </tr>
@@ -222,7 +221,7 @@
     });
 
     function dataUrl() {
-        var url = '/admin/datatables/quotations';
+        var url = '/admin/list/quotations';
         return url;
     }
 
@@ -237,21 +236,18 @@
             }
             , {
                 data: "name"
-                , className: "font-weight-bold nowrap"
+                , className: "font-weight-bold nowrap text-info"
             }
             , {
-                data: "contact_id"
+                data: "project_id"
+                , className: "text-center nowrap text-primary"
             }
             , {
                 data: "partner_id"
             }
             , {
-                data: "subTotal"
-                , className: "text-right"
-            }
-            , {
-                data: "tax"
-                , className: "text-right text-danger"
+                data: "type"
+                , className: "text-center"
             }
             , {
                 data: "total"
@@ -267,7 +263,7 @@
 
     function columnDefs() {
         var result = [{
-            targets: [2, 3, 4]
+            targets: []
             , class: "nowrap"
         }]
         return result;

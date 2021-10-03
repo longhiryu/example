@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\Partner;
 use App\Models\Product;
+use App\Models\Project;
 use App\Models\Quotation;
 use App\Models\QuotationDetail;
 use App\Models\User;
@@ -129,7 +130,8 @@ class QuotationController extends Controller
         Session::put($this->taxCode,$data->tax);
         $contact = Contact::find($data->contact_id);
         $partner = Partner::find($data->partner_id);
-        return view('admin.content.quotation.edit',compact('data','detail','contact','partner'));
+        $project = Project::find($data->project_id);
+        return view('admin.content.quotation.edit',compact('data','detail','contact','partner','project'));
     }
 
     /**

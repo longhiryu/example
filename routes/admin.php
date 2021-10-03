@@ -15,6 +15,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProjectController;
 use App\Models\Partner;
 use App\Models\Project;
+use App\Models\Quotation;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Quotation
     Route::resource('quotations', QuotationController::class);
+    Route::get('list/quotations', [Quotation::class, 'getQuotationList']);
     Route::get('quotations/approve/{id}/{user_id}', [QuotationController::class, 'quotationApprove'])->name('quotations.approve');
     Route::get('quotations/remove-approved/{id}', [QuotationController::class, 'removeApprove'])->name('quotations.remove-approved');
     Route::get('quotations/unlock/{id}', [QuotationController::class, 'unlockQuotation'])->name('quotations.unlock');
@@ -60,7 +62,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/accounts', [DataTablesController::class, 'getAccountList']);
 
-        Route::get('/quotations', [DataTablesController::class, 'getQuotationList']);
+        
 
         Route::get('/products', [DataTablesController::class, 'getProductList']);
         Route::get('/products/enable/{id}/{enable}', [ProductController::class, 'enableUpdate']);
@@ -76,6 +78,9 @@ Route::middleware(['auth'])->group(function () {
 Route::get('custome/403', function () {
     return view('admin.content.custom.custom403');
 })->name('custom403');
+
+// Project
+Route::get('/search/project/{text}', [ProjectController::class, 'searchProject']);
 
 // Contact
 Route::get('/search/contact/{text}', [ContactController::class, 'searchContact']);
