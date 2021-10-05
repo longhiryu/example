@@ -25,7 +25,7 @@
 <div class="content">
     <div class="card card-outline card-info">
         <div class="card-body">
-            <table id="table-list" class="styled-table" data-order='[[ 0, "desc" ]]'>
+            <table id="table-list" class="styled-table">
                 <thead>
                     <tr>
                         <th>Date</th>

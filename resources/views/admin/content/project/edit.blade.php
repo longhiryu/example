@@ -81,7 +81,17 @@
 
                 <div class="col-md-8">
                     <div class="card card-outline card-info">
-                        <div class="card-header">Giá trị</div>
+                        <div class="card-header">
+                            <h3 class="card-title">Thông tin giá trị</h3>
+                            <div class="card-tools">
+                                @if($project->run == 0)
+                                   <button id="runProject" data-id="{{$project->id}}" type="button" class="btn btn-primary btn-sm">Run this project</button> 
+                                @else
+                                    <span class="badge badge-pill badge-success">Project is running!</span>
+                                @endif
+                            </div>
+                        </div>
+                        
                         <div class="card-body">
                             <table class="table table-striped" style="font-size: 0.9rem;">
                                 <thead>
@@ -182,6 +192,31 @@
                 $('.modal-body').html(response.data);
                 console.log(response);
             });
+        });
+
+        $('#runProject').click(function () { 
+            var id = $(this).attr('data-id')
+            var link = '/admin/run/projects/'+id;
+            $.confirm({ // Jquery confirm
+                title: 'Run project confirm!'
+                , content: 'Do you want to set this project to running status!'
+                , type: 'blue'
+                , buttons: {
+                    ok: {
+                        text: "Yes, run!"
+                        , btnClass: 'btn-info'
+                        , action: function() {
+                            axios.get(link).then(function(response) {
+                                console.log(response);
+                                location.reload();
+                            });
+                        }
+                    }
+                    , cancel: function() {
+                        toastr.success('OK! Just relax!');
+                    }
+                }
+            });// Jquery confirm
         });
 
         var contact = {

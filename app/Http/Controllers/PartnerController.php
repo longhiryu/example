@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Partner;
 use App\Models\Project;
+use App\Models\Quotation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PartnerController extends Controller
 {
@@ -58,8 +60,18 @@ class PartnerController extends Controller
      */
     public function edit(Partner $partner)
     {
-        $projects = Project::where('partner_id',$partner->id)->get();
-        return view('admin.content.partner.edit',compact('partner','projects'));
+        $quotations = Quotation::where('partner_id',$partner->id)->get();
+        foreach ($quotations as $key => &$quotation) {
+            $project = Project::find($quotation->project_id);
+            if($project->run == 0){
+                unset($quotations[$key]);
+            }else{
+                $quotation->project_name = $project->name;
+                $quotation->run = $project->run;
+            }
+        }
+
+        return view('admin.content.partner.edit',compact('partner','quotations'));
     }
 
     /**

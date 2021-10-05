@@ -47,7 +47,7 @@ use Yajra\DataTables\Facades\DataTables;
 class Quotation extends \Eloquent
 {
     use HasFactory;
-    protected $fillable = ['type','name','author','contact_id','partner_id','sku','version','note','subTotal','tax','total','sum','approved','locked'];
+    protected $fillable = ['type','name','author','project_id','contact_id','partner_id','sku','version','note','subTotal','tax','total','sum','approved','locked'];
     public $allias = 'Quotation';
 
     public static function getTableName()

@@ -42,12 +42,6 @@ class ProjectController extends Controller
     {
         $data = $request->except('_token','_method');
 
-        // Add value to data array
-        $quotation = Quotation::find($data['quotation_id']);
-        $data['subTotal'] = $quotation->subTotal;
-        $data['total'] = $quotation->subTotal * 1.1;
-        $data['tax'] = $quotation->total - $quotation->subTotal;
-
         // create new project
         $new = Project::create($data);
 
@@ -75,7 +69,7 @@ class ProjectController extends Controller
     {
         $contact = Contact::find($project->contact_id);
         $partner = Partner::find($project->partner_id);
-        $quotations = Quotation::where('project_id',$project->id)->get();
+        $quotations = Quotation::where('project_id',$project->id)->orderBy('type','desc')->get();
         return view('admin.content.project.edit',compact('project','contact','partner','quotations'));
     }
 
@@ -117,5 +111,11 @@ class ProjectController extends Controller
     {
         $result = Project::select('id','name')->where('name', 'LIKE', "%{$text}%")->get(); 
         return response()->json($result);
+    }
+
+    public function runProject($id)
+    {
+        Project::where('id',$id)->update(['run' => '1']);
+        return response()->json('success',200);
     }
 }

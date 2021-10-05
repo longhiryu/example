@@ -32,7 +32,7 @@
                         <th>Name</th>
                         <th>Contact</th>
                         <th>Partner</th>
-                        <th>Sub total</th>
+                        <th>Run</th>
                         <th>Tax</th>
                         <th>Total</th>
                         <th>Action</th>
@@ -141,8 +141,8 @@
                 data: "partner_id"
             }
             , {
-                data: "subTotal"
-                , className: "text-right"
+                data: "run"
+                , className: "text-center"
             }
             , {
                 data: "tax"

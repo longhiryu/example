@@ -27,6 +27,18 @@ class QuotationController extends Controller
         return view('admin.content.quotation.list');
     }
 
+    public function getQuotationByPartner($partner)
+    {
+        $data = Quotation::where('partner_id',$partner->id)->get();
+        return $data;
+    }
+
+    public function getQuotationBtProject($project)
+    {
+        $data = Quotation::where('project_id',$project->id);
+        return $data;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -34,6 +46,7 @@ class QuotationController extends Controller
      */
     public function create()
     {   
+ 
         // Kiểm tra phân quyền
         $this->authorize('create',Quotation::class);    
 

@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Project
     Route::get('list/projects',[Project::class,'getProjectList']);
+    Route::get('run/projects/{id}',[ProjectController::class,'runProject']);
     Route::resource('projects', ProjectController::class);
     
 

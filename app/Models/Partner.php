@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 /**
  * App\Models\Partner
@@ -64,10 +65,16 @@ class Partner extends \Eloquent
             $deleteButton = '<button name="delete" type="button" class="btn btn-light btn-sm" data-id="'.$partner->id.'" data-link="'.route('partners.destroy',$partner->id).'">Delete</button>';
             return $editButton.' '.$deleteButton;
         })->addColumn('value', function ($partner) {
-            $project = Project::where('partner_id',$partner->id)->select('total')->get();
             $totalValue = 0;
-            foreach ($project as $value) {
-                $totalValue += $value->total;
+            $project = null;
+
+            $quotations = Quotation::select('total','project_id')->where('partner_id',$partner->id)->get();
+            foreach ($quotations as $quotation) {
+                $project = Project::find($quotation->project_id);
+                if($project->run == 1){
+                    $totalValue += $quotation->total;
+                }
+                $project = null;
             }
 
             return number_format($totalValue,0,',','.');
