@@ -61,9 +61,10 @@ class Partner extends \Eloquent
         $partner = Partner::all();
         return DataTables::of($partner)
         ->addColumn('action', function ($partner) {
+            $viewButton = '<button data-link="'.route('partners.show',$partner->id).'" type="button" class="btn btn-primary btn-sm quickview" data-toggle="modal" data-target="#quickview" data-name="'.$partner->companyName.'">View</button>';
             $editButton = '<a class="btn btn-info btn-sm text-white" href="'.route('partners.edit',$partner->id).'" role="button">Edit</a>';
             $deleteButton = '<button name="delete" type="button" class="btn btn-light btn-sm" data-id="'.$partner->id.'" data-link="'.route('partners.destroy',$partner->id).'">Delete</button>';
-            return $editButton.' '.$deleteButton;
+            return $viewButton.' '.$editButton.' '.$deleteButton;
         })->addColumn('value', function ($partner) {
             $totalValue = 0;
             $project = null;

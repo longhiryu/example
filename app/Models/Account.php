@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Account whereValue($value)
  * @mixin \Eloquent
  */
-class Account extends Model
+class Account extends \Eloquent
 {
     protected $fillable = ['name','value','type','note'];
     

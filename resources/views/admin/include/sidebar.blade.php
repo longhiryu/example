@@ -78,6 +78,30 @@
                     </ul>
                 </li>
 
+
+                <!-- Payment -->
+                <li class="nav-item has-treeview">
+                    <a href="" class="nav-link">
+                        <i class="nav-icon fas fa-money-check-alt"></i>
+                        <p>
+                            Payment
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('payments.index')}}" class="nav-link">
+                                <p> Payment list</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('payments.create')}}" class="nav-link">
+                                <p>Create new</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <!-- Account-->
                 <li class="nav-item has-treeview">
                     <a href="" class="nav-link">

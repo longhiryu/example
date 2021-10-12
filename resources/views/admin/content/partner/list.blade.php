@@ -46,6 +46,29 @@
     </div>
 </div>
 <!-- /.content -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="quickview" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chi tiết đối tác</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
 @endsection
 
 @push('scripts')
@@ -74,6 +97,17 @@
                     console.log(response);
                 });
             });
+
+            $("button.quickview").click(function() {
+                var link = $(this).attr('data-link');
+                var name = $(this).attr('data-name');
+                $('.modal-title').html(name);
+                axios.get(link).then(function(response) {
+                    $('.modal-body').html(response.data);
+                    console.log(response);
+                });
+            });
+
             $("button[name=delete]").click(function() {
                 var link = $(this).attr('data-link');
                 var button = $(this);
@@ -149,7 +183,7 @@
             }
             , {
                 data: "action"
-                , className: "text-center"
+                , className: "text-center nowrap"
             }
         ];
         return columns;

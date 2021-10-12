@@ -97,59 +97,6 @@
                 <div class="col-md-8">
                     <div class="card card-outline card-info">
                         <div class="card-header">
-                            <h3 class="card-title">More infomation</h3>
-                            <div class="card-tools">
-                            </div>
-                            <!-- /.card-tools -->
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-
-                            <table class="table table-striped" style="font-size: 0.9rem;">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center p-1">ID</th>
-                                        <th class="text-center p-1">Quotation</th>
-                                        <th class="text-center p-1">Project</th>
-                                        <th class="text-center p-1">Date</th>
-                                        <th class="text-center p-1">Status</th>
-                                        <th class="text-center p-1">Value</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $value = 0;?>
-                                    @foreach($quotations as $quotation)
-                                    <?php 
-                                        $value += $quotation->total;
-                                    ?>
-                                    <tr>
-                                        <td class="p-1 text-center">{{$quotation->id}}</td>
-                                        <td class="p-1">{{$quotation->name}}</td>
-                                        <td class="p-1">{{$quotation->project_name}}</td>
-                                        <td class="p-1 text-center">{{date("d/m/Y",strtotime($quotation->created_at))}}</td>
-                                        <td class="p-1 text-center">
-                                            @if($quotation->run == 1)
-                                                <span class="badge badge-pill badge-success">running</span>
-                                            @else
-                                                <span class="badge badge-pill badge-secondary">pending</span>
-                                            @endif
-                                        </td>
-                                        <td class="p-1 text-center">{{number_format($quotation->total,0,',','.')}}</td>
-                                    </tr>
-                                    @endforeach
-                                    <tr>
-                                        <td colspan="5" class="text-right font-weight-bold p-1">Total:</td>
-                                        <td class="font-weight-bold text-success text-center p-1">{{number_format($value,0,',','.')}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        </div> <!-- car-body-->
-                    </div>
-                </div><!-- col-md-8-->
-                <div class="col-md-12">
-                    <div class="card card-outline card-info">
-                        <div class="card-header">
                             <h3 class="card-title">Note</h3>
                             <div class="card-tools">
                             </div>
@@ -162,8 +109,7 @@
                             </textarea>
                         </div> <!-- car-body-->
                     </div>
-                    
-                </div><!-- col-md-12-->
+                </div><!-- col-md-8-->
             </div>
         </div>
     </form>

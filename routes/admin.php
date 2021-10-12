@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DataTablesController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\UserController;
@@ -47,6 +48,9 @@ Route::middleware(['auth'])->group(function () {
     // Partner
     Route::resource('partners', PartnerController::class);
     Route::get('list/partners', [Partner::class, 'getPartnerList']);
+
+    // Payment
+    Route::resource('payments', PaymentController::class);
 
     // Permission
     Route::resource('permissions', PermissionController::class);
@@ -91,6 +95,9 @@ Route::get('/search/partner/{text}', [PartnerController::class, 'searchPartner']
 
 // Quotation
 Route::get('/search/quotation/{text}', [QuotationController::class, 'searchQuotation']);
+
+// Account
+Route::get('/search/account/{text}', [AccountController::class, 'searchAccount']);
 
 // AddItem
 Route::get('quotation/add-item/{id}',[QuotationController::class, 'addItem']);

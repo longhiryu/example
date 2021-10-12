@@ -50,10 +50,10 @@ class AccountController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Account $account)
     {
         //
     }
@@ -106,5 +106,11 @@ class AccountController extends Controller
         );
 
         return $validateData;
+    }
+
+    public function searchAccount($text)
+    {
+        $result = Account::select('id','name')->where('name', 'LIKE', "%{$text}%")->get(); 
+        return response()->json($result);
     }
 }

@@ -49,7 +49,14 @@ class PartnerController extends Controller
      */
     public function show(Partner $partner)
     {
-        //
+        $projects = Project::where('run',1)->get();
+        foreach ($projects as &$project) {
+            $quotations = Quotation::where('project_id',$project->id)->select('total')->get();
+            foreach ($quotations as $quotation) {
+                $project->total += $quotation->total;
+            }
+        }
+        return view('admin.content.partner.show',compact('partner','projects'));
     }
 
     /**
@@ -60,18 +67,9 @@ class PartnerController extends Controller
      */
     public function edit(Partner $partner)
     {
-        $quotations = Quotation::where('partner_id',$partner->id)->get();
-        foreach ($quotations as $key => &$quotation) {
-            $project = Project::find($quotation->project_id);
-            if($project->run == 0){
-                unset($quotations[$key]);
-            }else{
-                $quotation->project_name = $project->name;
-                $quotation->run = $project->run;
-            }
-        }
+        
 
-        return view('admin.content.partner.edit',compact('partner','quotations'));
+        return view('admin.content.partner.edit',compact('partner'));
     }
 
     /**
